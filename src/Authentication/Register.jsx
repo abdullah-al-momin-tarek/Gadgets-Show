@@ -8,7 +8,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const {registerUser} = useContext(AuthContext)
+    const {registerUser, user} = useContext(AuthContext)
     const navigate = useNavigate()
     
 
@@ -31,6 +31,9 @@ const Register = () => {
             console.log(error?.message);
             
         })
+    }
+    if(user){
+        navigate("/")
     }
 
     return (

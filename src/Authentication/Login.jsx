@@ -1,10 +1,27 @@
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../AuthProvider/AuthProvider";
+import toast, { Toaster } from "react-hot-toast";
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
+	const {user, loginUser} = useContext(AuthContext)
+	const navigate = useNavigate()
 
-    const onSubmit = data => console.log(data);
+    const onSubmit = data => {
+		const {email, password} = data;
+
+		loginUser(email, password)
+		.then(() =>{
+			toast.success("Login Successfull")
+			navigate('/')
+		})
+
+	}
+	if(user){
+		navigate('/')
+	}
 
     return (
         <section className="flex items-center justify-center mt-12">
@@ -46,6 +63,7 @@ const Login = () => {
 		<button type="submit" className="w-full px-8 py-3 font-semibold rounded-md dark:bg-violet-600 dark:text-gray-50">Login</button>
 	</form>
 </div>
+<Toaster/>
         </section>
     );
 };
