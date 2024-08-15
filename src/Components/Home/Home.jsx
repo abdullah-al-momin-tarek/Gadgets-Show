@@ -1,18 +1,44 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Card from './Card';
+import { useLoaderData } from 'react-router-dom';
 
 const Home = () => {
 
     const [gadgets, setGadgets] = useState([])
+    const [currentPage, setCurrentPage] = useState(1)
+    const {count} = useLoaderData() 
+    const itemPerPage = 9;
+    const totalPage = Math.ceil(count / itemPerPage);
+
+    const pages = []
+        for(let i = 0; i<totalPage; i++){
+            pages.push(i)
+        }
+        console.log(pages);
+
+        const handlePrevious = () =>{
+            if(currentPage >0){
+                setCurrentPage(currentPage -1)
+            }
+        }
+        const handleNext = () =>{
+            if(currentPage < pages.length-1 ){
+                setCurrentPage(currentPage+1)
+            }
+        }
+        
+    
 
    useEffect(()=>{
-    axios.get(`http://localhost:5000/gadgets`)
+    axios.get(`http://localhost:5000/gadgets?page=${currentPage}&size=${itemPerPage}`)
     .then(data=>{
         setGadgets(data.data)
         
     })
-   },[])
+   },[currentPage])
+   console.log(gadgets);
+   
     
     return (
         <section className="mt-12">
@@ -111,6 +137,26 @@ const Home = () => {
                     gadgets?.map(gadget=> <Card key={gadget._id} gadget={gadget} />)
                 }
             </div>
+
+
+            {/* pagination */}
+            <div className="flex justify-center space-x-1 mt-5">
+	<button onClick={handlePrevious} title="previous" type="button" className="inline-flex items-center justify-center w-8 h-8 py-0 border rounded-md shadow-md bg-slate-700 text-white">
+		<svg viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="w-4">
+			<polyline points="15 18 9 12 15 6"></polyline>
+		</svg>
+	</button>
+	{
+        pages.map(page=><button key={page} type="button" onClick={()=>setCurrentPage(page)} className={`inline-flex items-center justify-center w-8 h-8 text-sm border rounded shadow-md  text-white ${page ===currentPage ? "bg-orange-500 " : "bg-slate-700"}`} title="Page 4">{page}</button>)
+    }
+	
+	<button onClick={handleNext} title="next" type="button" className="inline-flex items-center justify-center w-8 h-8 py-0 border rounded-md shadow-md bg-slate-700 text-white">
+		<svg viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="w-4">
+			<polyline points="9 18 15 12 9 6"></polyline>
+		</svg>
+	</button>
+</div>
+
         </section>
     );
 };
