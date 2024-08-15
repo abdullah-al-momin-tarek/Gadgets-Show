@@ -7,6 +7,7 @@ const Home = () => {
 
     const [gadgets, setGadgets] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
+    const [search, setSearch] = useState('')
     const {count} = useLoaderData() 
     const itemPerPage = 9;
     const totalPage = Math.ceil(count / itemPerPage);
@@ -27,16 +28,23 @@ const Home = () => {
                 setCurrentPage(currentPage+1)
             }
         }
+
+        const searchName = e =>{
+            e.preventDefault()
+            console.log(e.target.value);
+            setSearch(e.target.value)
+            
+        }
         
     
 
    useEffect(()=>{
-    axios.get(`http://localhost:5000/gadgets?page=${currentPage}&size=${itemPerPage}`)
+    axios.get(`http://localhost:5000/gadgets?page=${currentPage}&size=${itemPerPage}&search=${search}`)
     .then(data=>{
         setGadgets(data.data)
         
     })
-   },[currentPage])
+   },[currentPage, search])
    console.log(gadgets);
    
     
@@ -119,7 +127,7 @@ const Home = () => {
 
                 <div>
                     <label htmlFor="" className="text-white block">Search by name</label>
-                    <input
+                    <input onChange={searchName}
                         type="text"
                         name="endPrice"
                         placeholder="Samsung"
