@@ -1,0 +1,5 @@
+1. Pagination with next prev btn. 
+2. Search with Product name
+3. Sorting - Price -  low to high, high to low
+            - Date - Newest first
+4. Categorization - 
