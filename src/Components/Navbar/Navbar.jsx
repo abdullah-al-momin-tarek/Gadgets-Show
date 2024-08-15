@@ -1,5 +1,22 @@
+import { useContext } from "react";
+import {AuthContext} from "../../AuthProvider/AuthProvider"
+import toast, { Toaster } from "react-hot-toast";
 
 const Navbar = () => {
+  const {user, logOut} = useContext(AuthContext)
+  console.log(user);
+
+  const handleLogOut = () =>{
+    logOut()
+    .then(()=>{
+      toast.success("Logout Successfull")
+    })
+    .catch(error=>{
+      console.log(error.message);
+      
+    })
+  }
+  
     return (
         <div className="navbar bg-base-100">
   <div className="flex-1">
@@ -23,10 +40,11 @@ const Navbar = () => {
             Profile
           </a>
         </li>
-        <li><a>Logout</a></li>
+        <li><button onClick={handleLogOut}>Log out</button></li>
       </ul>
     </div>
   </div>
+  <Toaster/>
 </div>
     );
 };
