@@ -64,12 +64,12 @@ const Home = () => {
             setPriceRange(e.target.value)
         }
         
-    console.log(gadgets);
+    console.log("test", gadgets);
     
 
    useEffect(()=>{
-    // axios.get(`http://localhost:5000/gadgets?page=${currentPage}&size=${itemPerPage}&search=${search}&priceOrder=${priceOrder}&dateSort=${dateSort}`)
-    axios.get(`http://localhost:5000/gadgets`, {
+   
+    axios.get(`https://gadgets-show-server.vercel.app/gadgets`, {
         params: {
             page: currentPage,
             size: itemPerPage,
