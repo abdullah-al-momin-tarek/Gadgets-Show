@@ -6,8 +6,9 @@ import { useLoaderData } from 'react-router-dom';
 const Home = () => {
 
     const [gadgets, setGadgets] = useState([])
-    const [currentPage, setCurrentPage] = useState(1)
+    const [currentPage, setCurrentPage] = useState(0)
     const [search, setSearch] = useState('')
+    const [category, setCategory] = useState('')
     const [priceOrder, setPriceOrder] = useState("")
     const [dateSort, setDateSort] = useState("newestFirst")
     const {count} = useLoaderData() 
@@ -18,31 +19,38 @@ const Home = () => {
         for(let i = 0; i<totalPage; i++){
             pages.push(i)
         }
-
+        // Previous btn
         const handlePrevious = () =>{
             if(currentPage >0){
                 setCurrentPage(currentPage -1)
             }
         }
+        // Next btn
         const handleNext = () =>{
             if(currentPage < pages.length-1 ){
                 setCurrentPage(currentPage+1)
             }
         }
-
+        // Search
         const searchName = e =>{
             e.preventDefault()
             setSearch(e.target.value)
             
         }
-
+        // Price sort
         const handlePriceOrder= e =>{
             setPriceOrder(e.target.value)
             
         }
-
+        // Date sort
         const handleDateSort = e =>{
             setDateSort(e.target.value)
+            
+        }
+
+        // category
+        const handleCategory = e =>{
+            setCategory(e.target.value)
             console.log(e.target.value);
             
         }
@@ -51,12 +59,22 @@ const Home = () => {
     
 
    useEffect(()=>{
-    axios.get(`http://localhost:5000/gadgets?page=${currentPage}&size=${itemPerPage}&search=${search}&priceOrder=${priceOrder}&dateSort=${dateSort}`)
+    // axios.get(`http://localhost:5000/gadgets?page=${currentPage}&size=${itemPerPage}&search=${search}&priceOrder=${priceOrder}&dateSort=${dateSort}`)
+    axios.get(`http://localhost:5000/gadgets`, {
+        params: {
+            page: currentPage,
+            size: itemPerPage,
+            search: search,
+            priceOrder: priceOrder,
+            dateSort: dateSort,
+            category: category,
+        }
+    })
     .then(data=>{
         setGadgets(data.data)
         
     })
-   },[currentPage, dateSort, priceOrder, search])
+   },[category, currentPage, dateSort, priceOrder, search])
    
     
     return (
@@ -110,7 +128,7 @@ const Home = () => {
 
                 <div>
                 <label htmlFor="" className="text-white">Category </label>
-                <select className="select select-info w-full  max-w-lg">
+                <select value={category} onChange={handleCategory} className="select select-info w-full  max-w-lg">
                     <option value="All">All</option>
                     <option value="Mobile">Mobile</option>
                     <option value="Watch">Watch</option>
