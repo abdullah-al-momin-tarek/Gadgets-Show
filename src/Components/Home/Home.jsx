@@ -9,6 +9,7 @@ const Home = () => {
     const [currentPage, setCurrentPage] = useState(1)
     const [search, setSearch] = useState('')
     const [priceOrder, setPriceOrder] = useState("")
+    const [dateSort, setDateSort] = useState("newestFirst")
     const {count} = useLoaderData() 
     const itemPerPage = 9;
     const totalPage = Math.ceil(count / itemPerPage);
@@ -17,7 +18,6 @@ const Home = () => {
         for(let i = 0; i<totalPage; i++){
             pages.push(i)
         }
-        console.log(pages);
 
         const handlePrevious = () =>{
             if(currentPage >0){
@@ -32,27 +32,31 @@ const Home = () => {
 
         const searchName = e =>{
             e.preventDefault()
-            console.log(e.target.value);
             setSearch(e.target.value)
             
         }
 
         const handlePriceOrder= e =>{
             setPriceOrder(e.target.value)
+            
+        }
+
+        const handleDateSort = e =>{
+            setDateSort(e.target.value)
             console.log(e.target.value);
             
         }
         
+    console.log(gadgets);
     
 
    useEffect(()=>{
-    axios.get(`http://localhost:5000/gadgets?page=${currentPage}&size=${itemPerPage}&search=${search}&priceOrder=${priceOrder}`)
+    axios.get(`http://localhost:5000/gadgets?page=${currentPage}&size=${itemPerPage}&search=${search}&priceOrder=${priceOrder}&dateSort=${dateSort}`)
     .then(data=>{
         setGadgets(data.data)
         
     })
-   },[currentPage, priceOrder, search])
-   console.log(gadgets);
+   },[currentPage, dateSort, priceOrder, search])
    
     
     return (
@@ -71,9 +75,9 @@ const Home = () => {
                 </div>
                 <div>
                 <label htmlFor="" className="text-white">Date </label>
-                <select className="select select-info w-full  max-w-lg">
-                    <option >Newest First</option>
-                    <option>Oldest First</option>
+                <select value={dateSort} onChange={handleDateSort} className="select select-info w-full  max-w-lg">
+                    <option value="newetsFirst">Newest First</option>
+                    <option value="oldestFirst">Oldest First</option>
                 </select>
                 </div>
 
