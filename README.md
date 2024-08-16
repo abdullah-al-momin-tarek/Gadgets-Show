@@ -4,12 +4,16 @@ For setup this project follow the instruction properly.
 
 ### Clone the Repository
 First, clone the repository to your local machine using Git. Open your terminal and run:
-``` git clone https://github.com/abdullah-al-momin-tarek/Gadgets-Show-Client ```
+```
+git clone https://github.com/abdullah-al-momin-tarek/Gadgets-Show-Client
+```
 This will create a directory named **Gadgets-Show-Client**containing all the project files.
 
 ### Navigate to the Project directory
 Change your current working directory to the newly created project folder:
-```cd Gadgets-Show-Client```
+```
+cd Gadgets-Show-Client
+```
 
 ### Install Dependencies
 The project relies on various npm packages. To install them, run:
