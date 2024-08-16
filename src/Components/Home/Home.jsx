@@ -10,6 +10,7 @@ const Home = () => {
     const [search, setSearch] = useState('')
     const [category, setCategory] = useState('')
     const [priceOrder, setPriceOrder] = useState("")
+    const [brand, setBrand] = useState("")
     const [dateSort, setDateSort] = useState("newestFirst")
     const {count} = useLoaderData() 
     const itemPerPage = 9;
@@ -54,6 +55,10 @@ const Home = () => {
             console.log(e.target.value);
             
         }
+
+        const handleBrand = e =>{
+            setBrand(e.target.value);
+        }
         
     console.log(gadgets);
     
@@ -68,13 +73,14 @@ const Home = () => {
             priceOrder: priceOrder,
             dateSort: dateSort,
             category: category,
+            brand: brand,
         }
     })
     .then(data=>{
         setGadgets(data.data)
         
     })
-   },[category, currentPage, dateSort, priceOrder, search])
+   },[brand, category, currentPage, dateSort, priceOrder, search])
    
     
     return (
@@ -101,7 +107,7 @@ const Home = () => {
 
                 <div>
     <label htmlFor="brand" className="text-white">Brand </label>
-    <select id="brand" className="select select-info w-full max-w-lg">
+    <select value={brand} onChange={handleBrand} id="brand" className="select select-info w-full max-w-lg">
         <option value="All">All</option>
         <option value="Apple">Apple</option>
         <option value="Samsung">Samsung</option>
