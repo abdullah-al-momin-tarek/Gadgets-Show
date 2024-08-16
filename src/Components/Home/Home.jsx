@@ -8,6 +8,7 @@ const Home = () => {
     const [gadgets, setGadgets] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
     const [search, setSearch] = useState('')
+    const [priceOrder, setPriceOrder] = useState("")
     const {count} = useLoaderData() 
     const itemPerPage = 9;
     const totalPage = Math.ceil(count / itemPerPage);
@@ -35,16 +36,22 @@ const Home = () => {
             setSearch(e.target.value)
             
         }
+
+        const handlePriceOrder= e =>{
+            setPriceOrder(e.target.value)
+            console.log(e.target.value);
+            
+        }
         
     
 
    useEffect(()=>{
-    axios.get(`http://localhost:5000/gadgets?page=${currentPage}&size=${itemPerPage}&search=${search}`)
+    axios.get(`http://localhost:5000/gadgets?page=${currentPage}&size=${itemPerPage}&search=${search}&priceOrder=${priceOrder}`)
     .then(data=>{
         setGadgets(data.data)
         
     })
-   },[currentPage, search])
+   },[currentPage, priceOrder, search])
    console.log(gadgets);
    
     
@@ -56,9 +63,10 @@ const Home = () => {
                 <div className="flex flex-wrap gap-8 items-center justify-center">
                 <div>
                 <label htmlFor="" className="text-white">Price </label>
-                <select className="select select-info w-full max-w-lg">
-                    <option >Low to High</option>
-                    <option>High to Low</option>
+                <select value={priceOrder} onChange={handlePriceOrder} className="select select-info w-full max-w-lg">
+                    <option disabled value="">Select Order</option>
+                    <option value="lowToHigh">Low to High</option>
+                    <option value="highToLow">High to Low</option>
                 </select>
                 </div>
                 <div>
