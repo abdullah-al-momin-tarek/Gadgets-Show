@@ -10,6 +10,7 @@ const Home = () => {
     const [search, setSearch] = useState('')
     const [category, setCategory] = useState('')
     const [priceOrder, setPriceOrder] = useState("")
+    const [priceRange, setPriceRange] = useState("")
     const [brand, setBrand] = useState("")
     const [dateSort, setDateSort] = useState("newestFirst")
     const {count} = useLoaderData() 
@@ -55,9 +56,13 @@ const Home = () => {
             console.log(e.target.value);
             
         }
-
+        // Brand
         const handleBrand = e =>{
             setBrand(e.target.value);
+        }
+
+        const handlePriceRange = e =>{
+            setPriceRange(e.target.value)
         }
         
     console.log(gadgets);
@@ -74,13 +79,14 @@ const Home = () => {
             dateSort: dateSort,
             category: category,
             brand: brand,
+            priceRange: priceRange
         }
     })
     .then(data=>{
         setGadgets(data.data)
         
     })
-   },[brand, category, currentPage, dateSort, priceOrder, search])
+   },[brand, category, currentPage, dateSort, priceOrder, priceRange, search])
    
     
     return (
@@ -145,20 +151,15 @@ const Home = () => {
                 <div  className="flex flex-wrap gap-8 justify-center items-center mt-5">
                     
                 <div>
-                    <label htmlFor="" className="text-white block">Start Price</label>
-                    <input
-                        type="number"
-                        name="startPrice"
-                        placeholder="0"
-                        className="input input-bordered input-info max-w-lg w-auto" />
-                </div>
-                <div>
-                    <label htmlFor="" className="text-white block">End Price</label>
-                    <input
-                        type="number"
-                        name="endPrice"
-                        placeholder="1299"
-                        className="input input-bordered input-info w-auto max-w-lg" />
+                <label htmlFor="" className="text-white">Price Range </label>
+                <select value={priceRange} onChange={handlePriceRange} className="select select-info w-full  max-w-lg">
+                    <option value="All">All</option>
+                    <option value="50to199">50$ - 199$</option>
+                    <option value="200to399">200$ - 399$</option>
+                    <option value="400to599">400$ - 599$</option>
+                    <option value="600to799">600$ - 799$</option>
+                    <option value="800to1000">800$ - 1000+$</option>
+                </select>
                 </div>
 
                 <div>

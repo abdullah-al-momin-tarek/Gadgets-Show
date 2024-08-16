@@ -11,6 +11,7 @@ import Register from './Authentication/Register';
 import Login from './Authentication/Login';
 import AuthProvider from './AuthProvider/AuthProvider';
 import Home from './Components/Home/Home';
+import PrivateRoute from './Components/PrivateRoute/PrivateRoute'
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home/>,
+        element: <PrivateRoute><Home/></PrivateRoute>,
         loader: () => fetch("http://localhost:5000/gadgetsCount")
       },
       {

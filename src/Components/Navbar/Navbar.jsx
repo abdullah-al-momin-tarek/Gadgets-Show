@@ -20,7 +20,7 @@ const Navbar = () => {
     return (
         <div className="navbar bg-base-100">
   <div className="flex-1">
-    <a className="btn btn-ghost text-xl">Gadgets Show</a>
+    <a className="btn btn-ghost text-2xl text-green-500">Gadgets <span className="text-orange-500">Show</span></a>
   </div>
   <div className="flex-none gap-2">
     
