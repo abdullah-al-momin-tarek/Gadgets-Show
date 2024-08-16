@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Card from './Card';
-import { useLoaderData } from 'react-router-dom';
 
 const Home = () => {
 
@@ -13,7 +12,7 @@ const Home = () => {
     const [priceRange, setPriceRange] = useState("")
     const [brand, setBrand] = useState("")
     const [dateSort, setDateSort] = useState("newestFirst")
-    const {count} = useLoaderData() 
+    const count = 40;
     const itemPerPage = 9;
     const totalPage = Math.ceil(count / itemPerPage);
 

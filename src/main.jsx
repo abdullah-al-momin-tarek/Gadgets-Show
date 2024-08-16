@@ -21,7 +21,7 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <PrivateRoute><Home/></PrivateRoute>,
-        loader: () => fetch("http://localhost:5000/gadgetsCount")
+        // loader: () => fetch("http://localhost:5000/gadgetsCount")
       },
       {
         path: "register",
