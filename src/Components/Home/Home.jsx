@@ -79,6 +79,9 @@ const Home = () => {
             category: category,
             brand: brand,
             priceRange: priceRange
+        },
+        headers: {
+            'Content-Type': 'application/json'
         }
     })
     .then(data=>{
@@ -91,10 +94,10 @@ const Home = () => {
     return (
         <section className="mt-12">
             <div className="bg-orange-400 p-5 rounded-xl">
-                <h1 className="font-bold text-4xl text-center text-white mb-8">Explore our all gadgets</h1>
+                <h1 className="font-bold text-2xl md:text-4xl text-center text-white mb-8">Explore our all gadgets</h1>
                 
-                <div className="flex flex-wrap gap-8 items-center justify-center">
-                <div>
+                <div className="flex flex-wrap gap-3 md:gap-8 items-center justify-center">
+                <div className='w-28'>
                 <label htmlFor="" className="text-white">Price </label>
                 <select value={priceOrder} onChange={handlePriceOrder} className="select select-info w-full max-w-lg">
                     <option disabled value="">Select Order</option>
@@ -102,7 +105,7 @@ const Home = () => {
                     <option value="highToLow">High to Low</option>
                 </select>
                 </div>
-                <div>
+                <div className='w-28'>
                 <label htmlFor="" className="text-white">Date </label>
                 <select value={dateSort} onChange={handleDateSort} className="select select-info w-full  max-w-lg">
                     <option value="newetsFirst">Newest First</option>
@@ -110,7 +113,7 @@ const Home = () => {
                 </select>
                 </div>
 
-                <div>
+                <div className='w-28'>
     <label htmlFor="brand" className="text-white">Brand </label>
     <select value={brand} onChange={handleBrand} id="brand" className="select select-info w-full max-w-lg">
         <option value="All">All</option>
@@ -137,7 +140,7 @@ const Home = () => {
     </select>
 </div>
 
-                <div>
+                <div className='w-28'>
                 <label htmlFor="" className="text-white">Category </label>
                 <select value={category} onChange={handleCategory} className="select select-info w-full  max-w-lg">
                     <option value="All">All</option>
@@ -145,11 +148,9 @@ const Home = () => {
                     <option value="Watch">Watch</option>
                 </select>
                 </div>
-                </div>
 
-                <div  className="flex flex-wrap gap-8 justify-center items-center mt-5">
-                    
-                <div>
+
+                <div className='w-28'>
                 <label htmlFor="" className="text-white">Price Range </label>
                 <select value={priceRange} onChange={handlePriceRange} className="select select-info w-full  max-w-lg">
                     <option value="All">All</option>
@@ -161,6 +162,7 @@ const Home = () => {
                 </select>
                 </div>
 
+
                 <div>
                     <label htmlFor="" className="text-white block">Search by name</label>
                     <input onChange={searchName}
@@ -169,6 +171,15 @@ const Home = () => {
                         placeholder="Samsung"
                         className="input input-bordered input-info w-auto max-w-lg" />
                 </div>
+
+                </div>
+                
+
+                <div  className="flex flex-wrap gap-8 justify-center items-center mt-5">
+                    
+                
+
+                
                 </div>
 
             </div>
