@@ -15,6 +15,7 @@ const Register = () => {
 		google()
 		.then(()=>{
 			toast.success("Successfully login with Google")
+			navigate("/")
 		})
 		.catch(err=>{
 			console.log(err.message); 	
