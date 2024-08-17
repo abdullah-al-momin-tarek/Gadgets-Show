@@ -1,12 +1,14 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Card from './Card';
+import toast from 'react-hot-toast';
 
 const Home = () => {
 
     const [gadgets, setGadgets] = useState([])
     const [currentPage, setCurrentPage] = useState(0)
     const [search, setSearch] = useState('')
+    const [loader, setLoader] = useState(true)
     const [category, setCategory] = useState('')
     const [priceOrder, setPriceOrder] = useState("")
     const [priceRange, setPriceRange] = useState("")
@@ -15,6 +17,8 @@ const Home = () => {
     const count = 40;
     const itemPerPage = 9;
     const totalPage = Math.ceil(count / itemPerPage);
+
+
 
     const pages = []
         for(let i = 0; i<totalPage; i++){
@@ -52,7 +56,6 @@ const Home = () => {
         // category
         const handleCategory = e =>{
             setCategory(e.target.value)
-            console.log(e.target.value);
             
         }
         // Brand
@@ -64,11 +67,10 @@ const Home = () => {
             setPriceRange(e.target.value)
         }
         
-    console.log("test", gadgets);
     
 
    useEffect(()=>{
-   
+   try {
     axios.get(`https://gadgets-show-server.vercel.app/gadgets`, {
         params: {
             page: currentPage,
@@ -88,6 +90,13 @@ const Home = () => {
         setGadgets(data.data)
         
     })
+   } catch (error) {
+    toast.error(error.message)
+   }
+   finally{
+    setLoader(false)
+   }
+    
    },[brand, category, currentPage, dateSort, priceOrder, priceRange, search])
    
     
@@ -184,12 +193,17 @@ const Home = () => {
 
             </div>
 
+            {/* loader */}
+            {
+                loader && <div className="flex items-center justify-center"><span className="loading loading-spinner loading-lg"></span></div>
+            }
+
 
             {/* Card */}
 
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-12'>
                 {
-                    gadgets?.map(gadget=> <Card key={gadget._id} gadget={gadget} />)
+                !loader && gadgets.length > 0 &&  gadgets?.map(gadget=> <Card key={gadget._id} gadget={gadget} />)
                 }
             </div>
 
